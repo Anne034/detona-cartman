@@ -1,4 +1,4 @@
-# Desafio 02: Criando um Jogo do Detona South Park com JavaScript
+# Desafio 02: Criando um Jogo do Detona Ralph versao South Park com JavaScript
 
 Bem-vindo ao jogo South Park! Neste jogo simples, você precisa acertar o inimigo que aparece aleatoriamente nas posições da tela antes que o tempo acabe. Teste seus reflexos e veja quantos pontos você consegue fazer!
 
