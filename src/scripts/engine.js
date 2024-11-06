@@ -9,7 +9,7 @@ const state={
         gameVelocity:1000,
         hitPosition:0,
         result:0,
-        curretTime: 60,
+        currentTime: 60,
     },
 
     actions:{
@@ -20,10 +20,10 @@ const state={
 };
 
 function countDown(){
-    state.values.curretTime --;
-    state.view.timeLeft.textContent = state.values.curretTime;
+    state.values.currentTime --;
+    state.view.timeLeft.textContent = state.values.currentTime;
 
-    if(state.values.curretTime <0 ){
+    if(state.values.currentTime <0 ){
       clearInterval(state.actions.countDownTimerId);  
       clearInterval(state.actions.timerId);  
 
@@ -40,16 +40,14 @@ function playSound(audioName){
 }
 
 function playBackgroundSound() {
-    if (!state.actions.backgroundSound) {
-        state.actions.backgroundSound = new Audio('/src/audios/soundSP.m4a');
+    state.actions.backgroundSound.oncanplaythrough = () => {
         state.actions.backgroundSound.volume = 0.1;
-        state.actions.backgroundSound.loop = true; 
-    }
-    state.actions.backgroundSound.play();
+        state.actions.backgroundSound.loop = true;
+        state.actions.backgroundSound.play().catch(error => {
+            console.error("Erro ao iniciar som de fundo:", error);
+        });
+    };
 }
-document.addEventListener("click", () => {
-    playBackgroundSound();
-}, { once: true });
 
 function stopBackgroundSound() {
     if (state.actions.backgroundSound) {
@@ -84,13 +82,10 @@ function addListenerHitbox(){
     } );
 }
 
-function initialize(){
-addListenerHitbox(); 
-
-playBackgroundSound();
-
-state.actions.timerId = setInterval(randomSquare, state.values.gameVelocity);
-state.actions.countDownTimerId = setInterval(countDown, 1000);
+function initialize() {
+    addListenerHitbox(); 
+    state.actions.timerId = setInterval(randomSquare, state.values.gameVelocity);
+    state.actions.countDownTimerId = setInterval(countDown, 1000);
 }
 
 initialize();
